@@ -1,0 +1,150 @@
+/* public/css/stock.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f7;
+    margin: 0;
+    padding: 0;
+}
+
+.topbar {
+    background-color: #e24f22;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
+
+.logo-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-salir {
+    background-color: #e74c3c;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.main-content {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.search-box {
+    background: #ffffff;
+    border: 1px solid #dcdde1;
+    border-radius: 30px;
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    font-size: 0.95rem;
+    margin-left: 10px;
+    color: #7f8c8d;
+}
+
+.stock-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.stock-header h1 {
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.stock-header p {
+    color: #7f8c8d;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
+
+/* Enlace contenedor de la tarjeta */
+.category-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Estructura de la tarjeta con diseño flexible para que crezca correctamente */
+.category-card {
+    background: white;
+    padding: 0;
+    border-radius: 10px;
+    border: 1px solid #e74c3c;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.category-card-link:hover .category-card {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+/* Contenedor de la imagen corregido al 100% y con altura adecuada */
+.card-img-container {
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+/*4 categorias*/
+.card-img-container img {
+    width: 100%;
+    height: auto;
+    max-height: 280px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Franja inferior con fondo rojo y texto blanco, sin subrayados */
+.category-card h3 {
+    margin: 0;
+    padding: 12px 10px;
+    background-color: #e74c3c;
+    color: #ffffff;
+    font-size: 0.95rem;
+    text-decoration: none;
+    font-weight: 600;
+}

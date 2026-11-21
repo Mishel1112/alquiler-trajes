@@ -1,0 +1,177 @@
+.lista-header-titulo {
+    margin-bottom: 25px;
+}
+
+.lista-header-titulo h1 {
+    color: #2c3e50;
+    font-size: 1.6rem;
+    margin-bottom: 5px;
+}
+
+.lista-header-titulo p {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.lista-alquiler-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+}
+
+@media (max-width: 900px) {
+    .lista-alquiler-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card-seccion {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.card-seccion h3 {
+    color: #8b1e2e;
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 8px;
+}
+
+/* Tabla del carrito */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.tabla-carrito {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.tabla-carrito th {
+    background: #f8fafc;
+    color: #475569;
+    padding: 10px;
+    font-weight: 600;
+}
+
+.tabla-carrito td {
+    padding: 10px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.img-tabla-mini {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.btn-quitar-item {
+    background: #fee2e2;
+    color: #dc2626;
+    border: none;
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.btn-quitar-item:hover {
+    background: #fecaca;
+}
+
+.empty-tabla {
+    text-align: center;
+    color: #94a3b8;
+    padding: 20px !important;
+}
+
+/* Formulario Cliente Grid */
+.form-cliente-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+@media (max-width: 600px) {
+    .form-cliente-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Resumen Financiero */
+.card-resumen {
+    position: sticky;
+    top: 20px;
+}
+
+.resumen-linea {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    color: #475569;
+}
+
+.resumen-divider {
+    border: none;
+    border-top: 1px dashed #cbd5e1;
+    margin: 15px 0;
+}
+
+.resumen-total {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.btn-confirmar-alquiler {
+    width: 100%;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.2s;
+}
+
+.btn-confirmar-alquiler:hover {
+    background-color: #219653;
+}
+
+.alert-success {
+    background: #d1fae5;
+    color: #065f46;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.alert-error {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}

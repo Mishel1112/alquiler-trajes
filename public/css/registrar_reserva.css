@@ -1,0 +1,207 @@
+/* ==========================================================================
+   ESTILOS EXCLUSIVOS PARA EL FORMULARIO DE REGISTRO DE RESERVAS
+   ========================================================================== */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Header / Barra Superior */
+.topbar {
+    background: #e24f22;
+    padding: 14px 30px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo-text {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.btn-regresar {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 15px;
+    transition: opacity 0.2s;
+}
+
+.btn-regresar:hover {
+    opacity: 0.8;
+}
+
+.user-role {
+    font-size: 13px;
+    background: rgba(0, 0, 0, 0.15);
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+/* Contenedor Principal del Formulario */
+.container-registrar {
+    max-width: 1050px;
+    margin: 30px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Cabecera del Recibo de Reserva */
+.header-titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #2980b9;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+.header-titulo h2 {
+    color: #2980b9;
+    margin: 0;
+    font-size: 20px;
+}
+
+/* Tarjetas y Bloques de Secciones */
+.seccion-card {
+    background: #fdfefe;
+    border: 1px solid #e2e8f0;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.seccion-card h3 {
+    font-size: 15px;
+    color: #2c3e50;
+    border-bottom: 1px solid #cbd5e1;
+    padding-bottom: 6px;
+    margin-top: 0;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Campos de Entrada de Datos */
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: bold;
+    color: #475569;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="datetime-local"],
+.form-group input[type="number"],
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #2980b9;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(41, 128, 185, 0.15);
+}
+
+/* Caja Especial para Monto de Apartado (Seña) */
+.caja-apartado {
+    background: #eaf2f8;
+    border: 2px solid #2980b9;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.caja-apartado h3 {
+    font-size: 15px;
+    color: #2980b9;
+    border-bottom: 1px solid #b9d7ea;
+    padding-bottom: 6px;
+    margin-top: 0;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.input-monto-apartado {
+    font-weight: bold;
+    color: #27ae60 !important;
+    font-size: 16px !important;
+    border: 1px solid #2980b9 !important;
+}
+
+.total-trajes-reserva {
+    margin-top: 15px;
+    text-align: right;
+    font-size: 15px;
+    font-weight: bold;
+    color: #2980b9;
+    border-top: 1px dashed #2980b9;
+    padding-top: 8px;
+}
+
+/* Tabla del Detalle de Trajes Apartados */
+.tabla-detalles {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.tabla-detalles th {
+    background: #e2e8f0;
+    text-align: left;
+    font-size: 12px;
+    color: #334155;
+    padding: 8px;
+}
+
+.tabla-detalles td {
+    padding: 9px 8px;
+    font-size: 13px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+/* Botón Guardar Reserva */
+.btn-guardar-reserva {
+    width: 100%;
+    background: #2980b9;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn-guardar-reserva:hover {
+    background: #2471a3;
+}
+
+.btn-guardar-reserva:active {
+    transform: translateY(1px);
+}

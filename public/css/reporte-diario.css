@@ -1,0 +1,351 @@
+/* Estilos Generales */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+/* Barra Superior */
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    background-color: #e24f22;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+.topbar-marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.topbar-usuario {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+}
+
+.usuario-nombre {
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: normal;
+}
+
+.btn-cerrar-sesion {
+    background: #ffffff;
+    color: #e24f22;
+    border: none;
+    padding: 7px 15px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    letter-spacing: normal;
+}
+
+.btn-cerrar-sesion:hover {
+    background: #ffe3db;
+    color: #b52900;
+    transform: translateY(-1px);
+}
+
+.titulo-header {
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+}
+
+/* Menú Lateral */
+.sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 220px;
+    height: calc(100vh - 60px);
+    background-color: #ffffff;
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    z-index: 999;
+}
+
+.sidebar .menu-item {
+    color: #333;
+    padding: 14px 20px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    transition: background 0.2s;
+}
+
+.sidebar .menu-item:hover {
+    background-color: #ffebee;
+    color: #e65100;
+}
+
+.sidebar .menu-item.activo {
+    background-color: #ffebee;
+    color: #e65100;
+    font-weight: bold;
+}
+
+/* Contenido Principal */
+.contenido {
+    margin-left: 220px; 
+    margin-top: 60px;   
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* Contenedor del Reporte */
+.reporte-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.header-titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.btn-volver {
+    text-decoration: none;
+    color: #e65100;
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.header-titulo h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.fecha-badge {
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    font-size: 14px;
+}
+
+/* Cuadrícula de Tarjetas */
+.reporte-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+@media (max-width: 900px) {
+    .reporte-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.tarjeta-seccion {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.tarjeta-seccion h2 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #333;
+    border-bottom: 2px solid #f4f6f9;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Estilos de Gráfica y Leyenda */
+/* Estilos de Gráfica y Leyenda */
+.grafica-contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 10px 0;
+    flex-wrap: wrap;
+}
+
+.torta-visual {
+    position: relative;
+    width: 190px;
+    height: 190px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.torta-visual canvas {
+    max-width: 100%;
+    max-height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.torta-centro {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    line-height: 1.1;
+}
+
+.torta-centro-numero {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1e293b;
+    display: block;
+}
+
+.torta-centro-texto {
+    font-size: 11px;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.leyenda-torta {
+    flex: 1;
+    min-width: 180px;
+    max-height: 220px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.leyenda-torta ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.leyenda-torta li {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.leyenda-torta li:hover, .leyenda-torta li.hovered {
+    background: #ffffff;
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transform: translateX(4px);
+}
+
+.punto {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.leyenda-nombre {
+    font-weight: 600;
+    color: #334155;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 130px;
+}
+
+.leyenda-cantidad {
+    font-size: 11px;
+    color: #64748b;
+    margin-left: 6px;
+}
+
+.leyenda-badge {
+    margin-left: auto;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+/* Cajas de Estadísticas */
+.caja-dato {
+    display: flex;
+    align-items: center;
+    background: #fdfefe;
+    border: 1px solid #eaeded;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.icono-stat {
+    font-size: 28px;
+    margin-right: 15px;
+    background: #f4f6f9;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.info-stat label {
+    display: block;
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 4px;
+}
+
+.info-stat .valor {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e65100;
+}
+
+/* Botón de Imprimir */
+.footer-accion {
+    text-align: right;
+}
+

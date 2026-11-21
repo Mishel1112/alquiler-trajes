@@ -1,0 +1,28 @@
+/* Estilos específicos para la pantalla de selección inicial */
+.seleccion-inicio {
+    max-width: 800px;
+    margin: 40px auto;
+}
+
+.tarjeta-opcion {
+    padding: 30px 20px !important;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.icono-opcion {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.tarjeta-opcion h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.tarjeta-opcion p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0;
+}

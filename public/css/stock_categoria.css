@@ -1,0 +1,511 @@
+/* Estilos generales y barra superior */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8fafc;
+    margin: 0;
+    padding: 0;
+}
+
+.topbar {
+    background-color: #e24f22;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 25px;
+}
+
+.logo-text {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-regresar {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.btn-regresar:hover {
+    text-decoration: underline;
+}
+
+.main-content {
+    padding: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Margen dinámico para el buscador/contenido cuando el carrito superior está activo */
+.main-content.modo-alquiler {
+    margin-right: 360px;
+}
+
+@media (max-width: 1300px) {
+    .main-content.modo-alquiler {
+        margin-right: 25px;
+    }
+}
+
+/* Barra de búsqueda y botón nuevo */
+.header-acciones-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    gap: 15px;
+    border: 1px solid #e1e1e1;
+}
+
+.search-box-cat {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    background: #f8f9fa;
+    border-radius: 20px;
+    padding: 6px 15px;
+}
+
+.search-box-cat input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    margin-left: 10px;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.btn-anadir-nuevo {
+    background-color: #46f054;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.btn-anadir-nuevo:hover {
+    background-color: #b0f192;
+}
+
+.stock-header {
+    margin-top: 20px; 
+    text-align: left;
+}
+
+.stock-header h1 {
+    color: #2c3e50; 
+    font-size: 1.5rem;
+}
+
+/* Cuadrícula de tarjetas */
+.catalogo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+}
+
+.traje-catalogo-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    padding: 12px 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.traje-catalogo-card.modo-alquilar-card {
+    border: 2px solid #f7b3a7; 
+    border-radius: 8px;
+}
+
+.traje-catalogo-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.acciones-admin-card {
+    position: absolute; 
+    top: 10px; 
+    right: 10px; 
+    display: flex; 
+    gap: 5px; 
+    z-index: 2;
+}
+
+.btn-accion-editar {
+    border: none; 
+    border-radius: 4px; 
+    width: 30px; 
+    height: 30px; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 25px;
+    background: transparent;
+}
+
+.btn-accion-eliminar {
+    background: transparent;
+    border: none; 
+    border-radius: 4px; 
+    width: 28px; 
+    height: 28px; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 14px;
+}
+
+.catalogo-img-container {
+    width: 100%;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.catalogo-img-container img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.catalogo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.catalogo-precio {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.catalogo-nombre {
+    font-size: 0.8rem;
+    color: #333;
+    margin: 0;
+    line-height: 1.2;
+    font-weight: 600;
+}
+
+.catalogo-tag {
+    font-size: 12px; 
+    margin-top: 5px;
+    color: #7f8c8d;
+}
+
+.badge-stock {
+    background: #e2e8f0; 
+    padding: 2px 6px; 
+    border-radius: 4px; 
+    margin-right: 5px; 
+    display: inline-block; 
+    margin-bottom: 3px;
+}
+
+.badge-talla {
+    background: #f1f5f9; 
+    padding: 2px 6px; 
+    border-radius: 4px; 
+    margin-right: 3px; 
+    display: inline-block; 
+    margin-bottom: 3px;
+}
+
+.container-seleccionar-talla {
+    margin-top: 10px;
+}
+
+.label-talla {
+    font-size: 11px; 
+    font-weight: bold; 
+    color: #555;
+}
+
+.select-talla {
+    padding: 4px; 
+    font-size: 12px; 
+    width: 100%; 
+    margin-bottom: 5px; 
+    border-radius: 4px; 
+    border: 1px solid #ccc;
+}
+
+/* Estilos de la Ventana Modal */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-container {
+    background: #ffffff;
+    width: 850px;
+    max-width: 95%;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #8b1e2e;
+    font-size: 1.2rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.modal-body {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+.modal-upload-section {
+    border: 2px dashed #cbd5e1;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    background: #f8fafc;
+    cursor: pointer;
+    height: 200px;
+}
+
+.modal-upload-section span {
+    font-size: 2rem;
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+
+.modal-upload-section p {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.modal-form-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-field-full {
+    grid-column: span 2;
+}
+
+.modal-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.modal-field label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #475569;
+}
+
+.modal-field input, .modal-field select, .modal-field textarea {
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.modal-field input:focus, .modal-field select:focus, .modal-field textarea:focus {
+    border-color: #8b1e2e;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    background: #f8fafc;
+}
+
+.btn-modal-cancelar {
+    background: #e2e8f0;
+    color: #334155;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-modal-guardar {
+    background: #8b1e2e;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-modal-guardar:hover {
+    background: #a02437;
+}
+
+.swal2-popup .swal2-title {
+    font-size: 1.1rem !important; 
+}
+
+.swal2-popup .swal2-styled {
+    font-size: 0.85rem !important;
+}
+
+/* Estilos para el Carrito Flotante de Alquiler en la parte superior */
+.carrito-flotante {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    background: #ffffff;
+    border: 2px solid #f35129;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    width: 330px;
+    z-index: 1000;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+.carrito-header {
+    background: #f0501f;
+    color: white;
+    padding: 10px 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.carrito-body {
+    max-height: 220px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.carrito-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 6px 0;
+    font-size: 13px;
+}
+
+.btn-quitar-item {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carrito-footer {
+    padding: 10px;
+    background: #f9f9f9;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+
+.btn-confirmar-carrito {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    width: 100%;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-confirmar-carrito:hover {
+    background: #219653;
+}
+
+.btn-seleccionar-traje {
+    background: #f8643f;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    width: 100%;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 6px;
+}
+
+.btn-seleccionar-traje:hover {
+    background: #f33841;
+}
