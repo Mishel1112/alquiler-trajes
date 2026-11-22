@@ -504,7 +504,7 @@
                             <label style="display: block; font-size: 13px; font-weight: 600; color: #9b2c2c; margin-bottom: 5px;">
                                 Observación / Detalle del daño:
                             </label>
-                            <input type="text" name="observacion_danio" id="dev_observacion_danio" style="width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid #feb2b2; border-radius: 4px; font-size: 14px;" placeholder="Ej: Camisa quemada, botón roto...">
+                            <textarea name="observacion_danio" id="dev_observacion_danio" rows="3" style="width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid #feb2b2; border-radius: 4px; font-size: 13px; font-family: inherit; resize: vertical;" placeholder="Ej: Camisa quemada, botón roto, mancha en la falda..."></textarea>
                         </div>
                     </div>
 

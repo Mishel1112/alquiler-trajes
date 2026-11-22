@@ -146,29 +146,21 @@
                                 $lugarBaileActual = old('lugar_baile', $datosReserva->lugar_baile ?? '');
 
                                 $opParam = request('tipoOperacion') ?? request('tipo_operacion');
-                                $esReservaInicial = ($opParam === 'Reserva' || $opParam === 'reservado' || $opParam === 'reserva');
-                                if (session('reserva_a_entregar')) {
-                                    $esReservaInicial = false;
-                                }
-                                $tipoOperacionSeleccionada = old('tipoOperacion', $esReservaInicial ? 'Reserva' : 'Alquiler');
+                                $tipoOperacionSeleccionada = 'Alquiler';
                             @endphp
 
-                            <!-- Tipo de Operación: Alquiler o Reserva -->
+                            <!-- Tipo de Operación: Alquiler (No editable) -->
                             <div class="fila-campos" style="margin-bottom: 15px;">
                                 <div class="campo flex-grow">
                                     <label for="tipoOperacion" style="font-weight: bold; font-size: 13px; color: #1e293b; margin-bottom: 5px; display: block;">
                                         Tipo de operación:
                                     </label>
                                     @if(session('reserva_a_entregar'))
-                                        <select id="tipoOperacion" name="tipoOperacion" style="width: 100%; padding: 8px 12px; font-size: 14px; font-weight: bold; border-radius: 4px; border: 1.5px solid #cbd5e1; background: #f1f5f9; color: #475569;" readonly>
-                                            <option value="Alquiler" selected>Alquiler (Entrega de reserva confirmada)</option>
-                                        </select>
+                                        <input type="text" value="Alquiler (Entrega de reserva confirmada)" readonly style="width: 100%; padding: 8px 12px; font-size: 14px; font-weight: bold; border-radius: 4px; border: 1.5px solid #cbd5e1; background: #f1f5f9; color: #475569; cursor: not-allowed; box-sizing: border-box;">
                                     @else
-                                        <select id="tipoOperacion" name="tipoOperacion" onchange="cambiarTipoOperacion()" required style="width: 100%; padding: 8px 12px; font-size: 14px; font-weight: bold; border-radius: 4px; border: 1.5px solid #cbd5e1; background: #ffffff; color: #1e293b;">
-                                            <option value="Alquiler" {{ $tipoOperacionSeleccionada == 'Alquiler' ? 'selected' : '' }}>Alquiler</option>
-                                            <option value="Reserva" {{ $tipoOperacionSeleccionada == 'Reserva' ? 'selected' : '' }}>Reserva</option>
-                                        </select>
+                                        <input type="text" value="Alquiler" readonly style="width: 100%; padding: 8px 12px; font-size: 14px; font-weight: bold; border-radius: 4px; border: 1.5px solid #cbd5e1; background: #f1f5f9; color: #475569; cursor: not-allowed; box-sizing: border-box;">
                                     @endif
+                                    <input type="hidden" id="tipoOperacion" name="tipoOperacion" value="Alquiler">
                                 </div>
                             </div>
 
@@ -462,8 +454,8 @@
                             <input type="hidden" name="tipo" id="tipo_garantia_hidden" value="Dinero">
 
                             <div class="campo" style="margin-top: 10px;">
-                                <label for="observaciones">Observaciones:</label>
-                                <input type="text" id="observaciones" name="observaciones" value="{{ old('observaciones') }}">
+                                <label for="observaciones" style="font-weight: bold; font-size: 13px; color: #1e293b; margin-bottom: 5px; display: block;">Observaciones:</label>
+                                <textarea id="observaciones" name="observaciones" rows="3" style="width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit; font-size: 13px; resize: vertical;" placeholder="Observaciones adicionales sobre el alquiler o las prendas...">{{ old('observaciones') }}</textarea>
                             </div>
 
                             <div class="total-caja" style="margin-top: 10px;">

@@ -306,8 +306,8 @@
                             </div>
 
                             <div class="campo" style="margin-bottom: 15px;">
-                                <label for="descripcion_seña">Observación de seña:</label>
-                                <input type="text" id="descripcion_seña" name="descripcion" value="{{ request('descripcion', 'Seña para reserva de trajes') }}" style="width: 100%; padding: 8px; margin-top: 5px;">
+                                <label for="descripcion_seña" style="display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px;">Observación de seña / reserva:</label>
+                                <textarea id="descripcion_seña" name="descripcion" rows="3" style="width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit; font-size: 13px; resize: vertical; margin-top: 5px;" placeholder="Detalles de la seña, observaciones o notas de la reserva...">{{ request('descripcion', 'Seña para reserva de trajes') }}</textarea>
                             </div>
 
                             <div class="total-caja" style="margin-top: 15px; font-size: 16px; border-top: 1px solid #ddd; padding-top: 10px;">

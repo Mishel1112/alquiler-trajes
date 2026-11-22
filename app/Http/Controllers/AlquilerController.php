@@ -234,7 +234,10 @@ class AlquilerController extends Controller
             DB::beginTransaction();
 
             $tipoCliente = $request->input('tipo_cliente', 'publico general');
-            $tipoValido = in_array($tipoCliente, ['estudiante', 'fraternidad', 'publico general']) ? $tipoCliente : 'publico general';
+            if ($tipoCliente === 'publico') {
+                $tipoCliente = 'publico general';
+            }
+            $tipoValido = in_array($tipoCliente, ['estudiante', 'fraternidad', 'publico general', 'coreografo']) ? $tipoCliente : 'publico general';
 
             $idCliente = DB::table('cliente')->insertGetId([
                 'nombre'       => $request->input('nombre'),
@@ -342,6 +345,10 @@ class AlquilerController extends Controller
 
         $montoGarantia = $request->input('monto', 0);
         $descripcionGarantia = $request->input('descripcion', '');
+        $observacionesInput = trim($request->input('observaciones', ''));
+        if (!empty($observacionesInput)) {
+            $descripcionGarantia = !empty($descripcionGarantia) ? ($descripcionGarantia . " | Obs: " . $observacionesInput) : $observacionesInput;
+        }
 
         if ($esReserva) {
             $textoGarantia = "Anticipo: Bs " . number_format($montoGarantia, 0) . (!empty($descripcionGarantia) ? " (" . $descripcionGarantia . ")" : "");
@@ -433,7 +440,10 @@ class AlquilerController extends Controller
             $idReservaOriginal = $request->input('id_reserva') ?: session('reserva_a_entregar');
 
             $tipoCliente = $request->input('tipo_cliente', 'publico general');
-            $tipoValido = in_array($tipoCliente, ['estudiante', 'fraternidad', 'publico general']) ? $tipoCliente : 'publico general';
+            if ($tipoCliente === 'publico') {
+                $tipoCliente = 'publico general';
+            }
+            $tipoValido = in_array($tipoCliente, ['estudiante', 'fraternidad', 'publico general', 'coreografo']) ? $tipoCliente : 'publico general';
 
             $idCliente = DB::table('cliente')->insertGetId([
                 'nombre'       => $request->input('nombre'),
@@ -463,6 +473,11 @@ class AlquilerController extends Controller
                 $tipoGarantia = $request->input('tipo') ?: ($request->input('tipo_garantia_opcion') ?: 'Dinero');
                 $montoGarantia = floatval($request->input('monto', 0));
                 $descripcionGarantia = $request->input('descripcion');
+            }
+
+            $observacionesInput = trim($request->input('observaciones', ''));
+            if (!empty($observacionesInput)) {
+                $descripcionGarantia = !empty($descripcionGarantia) ? ($descripcionGarantia . " | Obs: " . $observacionesInput) : $observacionesInput;
             }
 
             $idGarantia = DB::table('garantia')->insertGetId([
