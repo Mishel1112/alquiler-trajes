@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UsuarioController extends Controller
 {
-    /**
-     * Muestra la lista de usuarios y el formulario para registrar nuevo usuario.
-     */
+    
     public function index()
     {
         $usuarios = Usuario::with('rol')->orderBy('idUsuario', 'asc')->get();
@@ -33,7 +31,7 @@ class UsuarioController extends Controller
             'email' => 'required|email|max:191|unique:usuario,email',
             'password' => 'required|string|min:6|same:password_confirmation',
             'password_confirmation' => 'required',
-            'id_Rol' => 'required|exists:rol,idRol',
+            'idRol' => 'required|exists:rol,idRol',
         ], [
             'nombre.required' => 'El campo Nombre(s) es obligatorio.',
             'apellido.required' => 'El campo Apellido(s) es obligatorio.',
@@ -44,8 +42,8 @@ class UsuarioController extends Controller
             'password.min' => 'La contraseña debe tener al menos 6 caracteres.',
             'password.same' => 'Las contraseñas no coinciden.',
             'password_confirmation.required' => 'Debe confirmar la contraseña.',
-            'id_Rol.required' => 'Debe seleccionar un rol.',
-            'id_Rol.exists' => 'El rol seleccionado no es válido.',
+            'idRol.required' => 'Debe seleccionar un rol.',
+            'idRol.exists' => 'El rol seleccionado no es válido.',
         ]);
 
         Usuario::create([
@@ -54,7 +52,7 @@ class UsuarioController extends Controller
             'telefono' => $request->filled('telefono') ? trim($request->telefono) : null,
             'email' => trim($request->email),
             'password' => Hash::make($request->password),
-            'idRol' => (int) $request->id_Rol,
+            'idRol' => (int) $request->idRol,
         ]);
 
         return redirect()->route('usuarios.index')->with('success', 'Usuario registrado exitosamente.');
@@ -72,7 +70,7 @@ class UsuarioController extends Controller
             'apellido' => 'required|string|max:100',
             'telefono' => 'nullable|string|max:50',
             'email' => 'required|email|max:191|unique:usuario,email,' . $usuario->idUsuario . ',idUsuario',
-            'id_Rol' => 'required|exists:rol,idRol',
+            'idRol' => 'required|exists:rol,idRol',
         ];
 
         if ($request->filled('password')) {
@@ -84,14 +82,14 @@ class UsuarioController extends Controller
             'apellido.required' => 'El apellido es obligatorio.',
             'email.required' => 'El correo electrónico es obligatorio.',
             'email.unique' => 'Este correo electrónico ya está en uso por otro usuario.',
-            'id_Rol.required' => 'Debe seleccionar un rol.',
+            'idRol.required' => 'Debe seleccionar un rol.',
         ]);
 
         $usuario->nombre = trim($request->nombre);
         $usuario->apellido = trim($request->apellido);
         $usuario->telefono = $request->filled('telefono') ? trim($request->telefono) : null;
         $usuario->email = trim($request->email);
-        $usuario->idRol = (int) $request->id_Rol;
+        $usuario->idRol = (int) $request->idRol;
 
         if ($request->filled('password')) {
             $usuario->password = Hash::make($request->password);

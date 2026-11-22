@@ -1,145 +1,118 @@
-/* Estilos Base / Layout */
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f6f9;
-    color: #333;
-}
+/* ============================================================
+   REPORTES - CREACIONES Y FANTASÍAS ERLINDA
+   ============================================================ */
+@import url('theme.css');
 
-.topbar {
-    position: fixed;
-    top: 0;
-    left: 0;
+body { background: var(--color-bg); }
+
+.form-logout { margin-top: 20px; padding: 0 16px; }
+.btn-salir {
     width: 100%;
-    height: 65px;
-    background-color: #e24f22; /* Color vino institucional */
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 30px;
-    box-sizing: border-box;
-    z-index: 1000;
-}
-
-.topbar-marca {
     display: flex;
     align-items: center;
     gap: 10px;
-}
-
-.topbar-usuario {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.usuario-nombre {
-    font-size: 14px;
-    font-weight: 500;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.btn-cerrar-sesion {
-    background: #ffffff;
-    color: #e24f22;
-    border: none;
-    padding: 6px 14px;
+    background: rgba(231,76,60,.15);
+    border: 1px solid rgba(231,76,60,.3);
+    color: #E87E74;
+    padding: 11px 16px;
     border-radius: 6px;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.12);
-    transition: all 0.2s ease;
-    text-decoration: none;
+    transition: all .22s ease;
 }
+.btn-salir:hover { background: rgba(231,76,60,.28); color: #fff; }
 
-.btn-cerrar-sesion:hover {
-    background: #ffe3db;
-    color: #b52900;
-    transform: translateY(-1px);
-}
-
-.titulo-header {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.sidebar {
-    position: fixed;
-    top: 60px;
-    left: 0;
-    width: 220px;
-    height: calc(100vh - 60px);
-    background-color: #ffffff;
-    border-right: 1px solid #ddd;
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-}
-
-.menu-item {
-    padding: 12px 20px;
-    text-decoration: none;
-    color: #333;
-    display: flex;
-    align-items: center;
-    font-size: 15px;
-    transition: background 0.2s;
-}
-
-.menu-item:hover, .menu-item.activo {
-    background-color: #fce4ec;
-    color: #900c3f;
-    border-left: 4px solid #900c3f;
-}
-
-.contenido {
-    margin-left: 220px;
-    margin-top: 60px;
-    padding: 30px;
-}
-
+/* CONTENIDO */
 .reporte-container {
-    max-width: 1000px;
+    max-width: 980px;
     margin: 0 auto;
 }
 
 .header-titulo {
+    margin-bottom: 32px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+}
+.header-titulo h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -.3px;
 }
 
-/* Tarjetas de Selección Principal */
+/* GRID DE OPCIONES */
 .grid-opciones-reporte {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-top: 20px;
+    gap: 24px;
+}
+
+@media (max-width: 800px) {
+    .grid-opciones-reporte { grid-template-columns: 1fr; }
 }
 
 .tarjeta-opcion {
-    background: white;
-    padding: 30px 20px;
-    border-radius: 10px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px 24px 28px;
     text-align: center;
     text-decoration: none;
-    color: #333;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    transition: transform 0.2s, box-shadow 0.2s;
-    border: 1px solid #eaeaea;
+    color: var(--color-text);
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    border: 1.5px solid var(--color-border-light);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
 }
 
+/* Barra superior de color */
+.tarjeta-opcion::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #C0392B, #F39C12);
+    border-radius: 999px 999px 0 0;
+    opacity: 0;
+    transition: opacity .25s;
+}
+.tarjeta-opcion:hover::before { opacity: 1; }
+
 .tarjeta-opcion:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-    border-color: #900c3f;
+    transform: translateY(-7px);
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    border-color: #C0392B;
+}
+
+.tarjeta-opcion img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 12px;
+    padding: 8px;
+    background: var(--color-bg);
+    transition: transform .3s ease;
+}
+.tarjeta-opcion:hover img { transform: scale(1.08) rotate(-2deg); }
+
+.tarjeta-opcion h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+}
+
+.tarjeta-opcion p {
+    font-size: 13.5px;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin: 0;
 }

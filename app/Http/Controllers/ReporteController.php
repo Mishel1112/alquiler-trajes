@@ -31,11 +31,11 @@ class ReporteController extends Controller
                   ->orWhereDate('detalle_alquiler.created_at', $fechaSeleccionada);
             })
             ->whereRaw("LOWER(TRIM(alquiler.estado)) IN ('alquilado', 'activo', 'activos', 'entregado', 'lavado', 'ingresado_stock', 'ingresado al stock', 'disponible', 'finalizado')") 
-            ->select('detalle_alquiler.subTotal', 'traje.nombre as nombreTraje')
+            ->select('detalle_alquiler.subTotal', 'detalle_alquiler.cantidad', 'traje.nombre as nombreTraje')
             ->get();
 
         $totalRecaudado = (float) $detallesHoy->sum('subTotal');
-        $trajesEntregados = $detallesHoy->count();
+        $trajesEntregados = (int) $detallesHoy->sum('cantidad');
 
         $modelosAgrupados = $detallesHoy->groupBy(function($item) {
             return strtoupper(trim($item->nombreTraje ?? 'OTRO'));
@@ -51,7 +51,7 @@ class ReporteController extends Controller
         if ($trajesEntregados > 0) {
             $idx = 0;
             foreach ($modelosAgrupados as $nombreModelo => $items) {
-                $cantidad = $items->count();
+                $cantidad = (int) $items->sum('cantidad');
                 $porcentaje = round(($cantidad / $trajesEntregados) * 100);
                 $modelosData[] = [
                     'modelo' => $nombreModelo,
@@ -96,12 +96,13 @@ class ReporteController extends Controller
             ->whereRaw("LOWER(TRIM(alquiler.estado)) IN ('alquilado', 'activo', 'activos', 'entregado', 'lavado', 'ingresado_stock', 'ingresado al stock', 'disponible', 'finalizado')")
             ->select(
                 'detalle_alquiler.subTotal',
+                'detalle_alquiler.cantidad',
                 DB::raw('COALESCE(alquiler.f_recogida, detalle_alquiler.created_at, alquiler.created_at) as fecha_operacion')
             )
             ->get();
 
         $totalMes = (float) $detallesMes->sum('subTotal');
-        $trajesMes = $detallesMes->count();
+        $trajesMes = (int) $detallesMes->sum('cantidad');
 
         $semanasData = [
             'Semana 1' => 0,
@@ -132,59 +133,123 @@ class ReporteController extends Controller
         ));
     }
 
-    // 4. Reporte Anual (Comparativa global incluyendo estados válidos)
-    public function anual()
+    // 4. Reporte Anual (Comparativa global e histórico por gestión seleccionable)
+    public function anual(Request $request)
     {
+        // 1. Obtener datos agrupados de todas las gestiones
         $aniosData = DB::table('detalle_alquiler')
             ->join('alquiler', 'detalle_alquiler.idAlquiler', '=', 'alquiler.idAlquiler')
             ->whereRaw("LOWER(TRIM(alquiler.estado)) IN ('alquilado', 'activo', 'activos', 'entregado', 'lavado', 'ingresado_stock', 'ingresado al stock', 'disponible', 'finalizado')")
             ->select(
                 DB::raw('YEAR(COALESCE(alquiler.f_recogida, detalle_alquiler.created_at, alquiler.created_at)) as anio'),
                 DB::raw('SUM(detalle_alquiler.subTotal) as total'),
-                DB::raw('COUNT(detalle_alquiler.idDetalleAlquiler) as trajes')
+                DB::raw('SUM(detalle_alquiler.cantidad) as trajes'),
+                DB::raw('COUNT(DISTINCT alquiler.idAlquiler) as operaciones')
             )
             ->groupBy(DB::raw('YEAR(COALESCE(alquiler.f_recogida, detalle_alquiler.created_at, alquiler.created_at))'))
             ->orderBy('anio', 'desc')
             ->get();
 
-        $aniosDisponibles = $aniosData->pluck('anio')->toArray();
-
+        $aniosDisponibles = $aniosData->pluck('anio')->map(fn($y) => (int) $y)->toArray();
         $anioActual = Carbon::now()->year;
-        $anioPasado = $anioActual - 1;
+        if (!in_array($anioActual, $aniosDisponibles)) {
+            array_unshift($aniosDisponibles, $anioActual);
+        }
+        rsort($aniosDisponibles);
 
-        $actualData = $aniosData->firstWhere('anio', $anioActual);
-        $pasadoData = $aniosData->firstWhere('anio', $anioPasado);
+        // 2. Gestión seleccionada (por defecto la gestión actual)
+        $anioSeleccionado = (int) $request->input('gestion', $request->input('anio', $anioActual));
+        $anioAnterior = $anioSeleccionado - 1;
 
-        $totalAnualActual = $actualData ? (float) $actualData->total : 0.0;
-        $trajesAnualActual = $actualData ? (int) $actualData->trajes : 0;
+        // Datos específicos de la gestión seleccionada
+        $datosGestionActual = $aniosData->firstWhere('anio', $anioSeleccionado);
+        $datosGestionAnterior = $aniosData->firstWhere('anio', $anioAnterior);
 
-        $totalAnualPasado = $pasadoData ? (float) $pasadoData->total : 0.0;
-        $trajesAnualPasado = $pasadoData ? (int) $pasadoData->trajes : 0;
+        $totalGestion = $datosGestionActual ? (float) $datosGestionActual->total : 0.0;
+        $trajesGestion = $datosGestionActual ? (int) $datosGestionActual->trajes : 0;
+        $operacionesGestion = $datosGestionActual ? (int) $datosGestionActual->operaciones : 0;
 
-        $diferencia = $totalAnualActual - $totalAnualPasado;
+        $totalGestionAnterior = $datosGestionAnterior ? (float) $datosGestionAnterior->total : 0.0;
+        $trajesGestionAnterior = $datosGestionAnterior ? (int) $datosGestionAnterior->trajes : 0;
+
+        $diferencia = $totalGestion - $totalGestionAnterior;
         $porcentajeCrecimiento = 0;
-        if ($totalAnualPasado > 0) {
-            $porcentajeCrecimiento = round(($diferencia / $totalAnualPasado) * 100);
-        } elseif ($totalAnualActual > 0) {
+        if ($totalGestionAnterior > 0) {
+            $porcentajeCrecimiento = round(($diferencia / $totalGestionAnterior) * 100, 1);
+        } elseif ($totalGestion > 0) {
             $porcentajeCrecimiento = 100;
         }
 
+        // 3. Desglose mensual detallado de la gestión seleccionada
+        $desgloseMensualRaw = DB::table('detalle_alquiler')
+            ->join('alquiler', 'detalle_alquiler.idAlquiler', '=', 'alquiler.idAlquiler')
+            ->whereRaw("LOWER(TRIM(alquiler.estado)) IN ('alquilado', 'activo', 'activos', 'entregado', 'lavado', 'ingresado_stock', 'ingresado al stock', 'disponible', 'finalizado')")
+            ->whereRaw("YEAR(COALESCE(alquiler.f_recogida, detalle_alquiler.created_at, alquiler.created_at)) = ?", [$anioSeleccionado])
+            ->select(
+                DB::raw('MONTH(COALESCE(alquiler.f_recogida, detalle_alquiler.created_at, alquiler.created_at)) as mes_num'),
+                DB::raw('SUM(detalle_alquiler.subTotal) as total'),
+                DB::raw('SUM(detalle_alquiler.cantidad) as trajes'),
+                DB::raw('COUNT(DISTINCT alquiler.idAlquiler) as operaciones')
+            )
+            ->groupBy('mes_num')
+            ->get()
+            ->keyBy('mes_num');
+
+        $nombresMeses = [
+            1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril',
+            5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto',
+            9 => 'Septiembre', 10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre'
+        ];
+
+        $mesesDesglose = [];
+        $maxTotalMes = 0;
+        $mesPico = null;
+
+        foreach ($nombresMeses as $num => $nombre) {
+            $fila = $desgloseMensualRaw->get($num);
+            $totalM = $fila ? (float) $fila->total : 0.0;
+            $trajesM = $fila ? (int) $fila->trajes : 0;
+            $operacionesM = $fila ? (int) $fila->operaciones : 0;
+            $porcentaje = $totalGestion > 0 ? round(($totalM / $totalGestion) * 100, 1) : 0;
+
+            if ($totalM > $maxTotalMes) {
+                $maxTotalMes = $totalM;
+                $mesPico = $nombre;
+            }
+
+            $mesesDesglose[] = [
+                'numero' => $num,
+                'nombre' => $nombre,
+                'total' => $totalM,
+                'trajes' => $trajesM,
+                'operaciones' => $operacionesM,
+                'porcentaje' => $porcentaje
+            ];
+        }
+
+        // 4. Totales acumulados históricos globales
         $totalAcumulado = (float) $aniosData->sum('total');
         $historicoTrajes = (int) $aniosData->sum('trajes');
+        $historicoOperaciones = (int) $aniosData->sum('operaciones');
 
         return view('auth.reporte-anual', compact(
             'aniosData',
-            'totalAcumulado',
-            'historicoTrajes',
-            'totalAnualActual',
-            'trajesAnualActual',
-            'totalAnualPasado',
-            'trajesAnualPasado',
+            'aniosDisponibles',
+            'anioSeleccionado',
+            'anioActual',
+            'anioAnterior',
+            'totalGestion',
+            'trajesGestion',
+            'operacionesGestion',
+            'totalGestionAnterior',
+            'trajesGestionAnterior',
             'diferencia',
             'porcentajeCrecimiento',
-            'anioActual',
-            'anioPasado',
-            'aniosDisponibles'
+            'mesesDesglose',
+            'mesPico',
+            'totalAcumulado',
+            'historicoTrajes',
+            'historicoOperaciones'
         ));
     }
 }

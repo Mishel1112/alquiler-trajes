@@ -12,7 +12,6 @@ class TallaTraje extends Model
 
     protected $fillable = [
         'idTraje',
-        'id_traje',
         'talla',
         'stock',
     ];

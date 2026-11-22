@@ -16,8 +16,7 @@ class Usuario extends Authenticatable
         'telefono',
         'email',
         'password',
-        'idRol',
-        'id_Rol', 
+        'idRol', 
     ];
 
     protected $casts = [
@@ -32,13 +31,11 @@ class Usuario extends Authenticatable
 
     public function esAdmin(): bool
     {
-        $rolId = (int) ($this->idRol ?? $this->id_Rol ?? 0);
-        return $rolId === 1 || (strtolower(optional($this->rol)->nombre ?? '') === 'administrador');
+        return (int) $this->idRol === 1 || (strtolower(optional($this->rol)->nombre ?? '') === 'administrador');
     }
 
     public function esEmpleado(): bool
     {
-        $rolId = (int) ($this->idRol ?? $this->id_Rol ?? 0);
-        return $rolId === 2 || (strtolower(optional($this->rol)->nombre ?? '') === 'empleado');
+        return (int) $this->idRol === 2 || (strtolower(optional($this->rol)->nombre ?? '') === 'empleado');
     }
 }

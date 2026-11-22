@@ -15,7 +15,6 @@ class Traje extends Model
 
     protected $fillable = [
         'idCategoria',
-        'id_Categoria',
         'nombre',
         'pieza',
         'cant_piezas',
@@ -27,12 +26,12 @@ class Traje extends Model
 
     public function categoria()
     {
-        return $this->belongsTo(Categoria::class, 'idCategoria', 'idCategoria');
+        return $this->belongsTo(Categoria::class, 'id_Categoria', 'idCategoria');
     }
 
     public function tallas()
     {
-        return $this->hasMany(TallaTraje::class, 'idTraje', 'idTraje');
+        return $this->hasMany(TallaTraje::class, 'id_traje', 'idTraje');
     }
 
     public function detallesAlquiler()

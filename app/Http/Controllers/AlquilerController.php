@@ -780,27 +780,29 @@ class AlquilerController extends Controller
             return $res;
         });
 
-        // 4. Historial de Devoluciones completadas
-        $historial_raw = DB::table('devolucion')
-            ->join('alquiler', 'devolucion.idAlquiler', '=', 'alquiler.idAlquiler')
+        // 4. Historial de Devoluciones y Alquileres Finalizados (Paginado)
+        $historial_raw = DB::table('alquiler')
             ->join('cliente', 'alquiler.idCliente', '=', 'cliente.idCliente')
-            ->leftJoin('usuario', 'devolucion.idUsuario', '=', 'usuario.idUsuario')
+            ->leftJoin('usuario', 'alquiler.idUsuario', '=', 'usuario.idUsuario')
+            ->leftJoin('devolucion', 'alquiler.idAlquiler', '=', 'devolucion.idAlquiler')
+            ->whereIn(DB::raw('LOWER(alquiler.estado)'), ['finalizado'])
             ->select(
-                'devolucion.idDevolucion',
                 'alquiler.idAlquiler',
                 'cliente.nombre as cliente',
+                'alquiler.f_recogida as fecha_recogida',
+                'alquiler.f_devolucion as fecha_devolucion',
                 'devolucion.f_real_devolucion as fecha_devolucion_real',
                 'devolucion.f_ingreso_stock as fecha_ingreso_stock',
-                'devolucion.f_devolucion as fecha_devolucion',
                 'alquiler.created_at',
-                'devolucion.estado',
+                'alquiler.estado',
                 'usuario.nombre as usuario_nombre',
                 'usuario.apellido as usuario_apellido'
             )
-            ->orderBy('devolucion.idDevolucion', 'desc')
-            ->get();
+            ->orderBy('alquiler.idAlquiler', 'desc')
+            ->paginate(8, ['*'], 'page')
+            ->withQueryString();
 
-        $historialIds = $historial_raw->pluck('idAlquiler')->toArray();
+        $historialIds = collect($historial_raw->items())->pluck('idAlquiler')->toArray();
         $detallesHistorial = DB::table('detalle_alquiler')
             ->join('traje', 'detalle_alquiler.idTraje', '=', 'traje.idTraje')
             ->whereIn('detalle_alquiler.idAlquiler', $historialIds)
@@ -808,23 +810,23 @@ class AlquilerController extends Controller
             ->get()
             ->groupBy('idAlquiler');
 
-        $historial = $historial_raw->map(function ($item) use ($detallesHistorial) {
+        foreach ($historial_raw->items() as $item) {
             $detalles = $detallesHistorial->get($item->idAlquiler, collect());
             $item->detalles = $detalles;
             $item->traje = $detalles->pluck('nombre')->join(', ');
             $item->cantidad_total = $detalles->sum('cantidad');
             $item->numero_recibo = $item->idAlquiler;
 
-            $fIngresoRaw = $item->fecha_ingreso_stock ?? $item->fecha_devolucion_real ?? $item->created_at ?? now();
+            $fIngresoRaw = $item->fecha_ingreso_stock ?? $item->fecha_devolucion_real ?? $item->fecha_devolucion ?? $item->created_at ?? now();
             $item->fecha_ingreso_historial_formateada = Carbon::parse($fIngresoRaw)->format('d/m/Y');
 
             $nomUsuario = !empty($item->usuario_nombre)
                 ? trim($item->usuario_nombre . ' ' . ($item->usuario_apellido ?? ''))
                 : (auth()->check() ? trim(auth()->user()->nombre . ' ' . (auth()->user()->apellido ?? '')) : 'Erlinda');
             $item->usuario = $nomUsuario;
+        }
 
-            return $item;
-        });
+        $historial = $historial_raw;
 
         return view('auth.alquiler', compact('pestaña_actual', 'alquileres_activos', 'devoluciones', 'reservas', 'historial'));
     }

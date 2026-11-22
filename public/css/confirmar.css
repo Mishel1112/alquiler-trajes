@@ -1,13 +1,19 @@
-/* Estilos generales idénticos al modal de la interfaz */
+/* ============================================================
+   CONFIRMAR / CONFIGURAR ALQUILER (MODAL)
+   Creaciones y Fantasías Erlinda
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
 }
 
 body {
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro translúcido típico de modal */
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,10 +24,16 @@ body {
 .modal-dialog-container {
     width: 100%;
     max-width: 820px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-12px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* Cabecera del Modal */
@@ -29,61 +41,68 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 25px;
-    border-bottom: 1px solid #eaeaea;
+    padding: 20px 26px;
+    border-bottom: 1.5px solid #F1F5F9;
+    background: #FAFAFA;
 }
 
 .modal-header h3 {
     margin: 0;
-    color: #2c3e50;
-    font-size: 22px;
-    font-weight: 600;
+    color: #1F2937;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
 }
 
 .btn-close {
     text-decoration: none;
     font-size: 24px;
-    color: #888;
+    color: #94A3B8;
     font-weight: bold;
-    transition: color 0.2s;
+    transition: color 0.18s;
+    line-height: 1;
 }
 
 .btn-close:hover {
-    color: #333;
+    color: #1E293B;
 }
 
 /* Cuerpo del Modal */
 .modal-body {
-    padding: 25px;
+    padding: 26px;
 }
 
 .grid-layout {
     display: grid;
     grid-template-columns: 280px 1fr;
-    gap: 25px;
+    gap: 26px;
+}
+
+@media (max-width: 720px) {
+    .grid-layout { grid-template-columns: 1fr; }
 }
 
 /* Caja de Imagen */
 .image-box {
-    border: 2px dashed #cbd5e1;
-    border-radius: 8px;
-    padding: 15px;
+    border: 1.5px dashed #CBD5E1;
+    border-radius: 10px;
+    padding: 16px;
     text-align: center;
-    background: #fafafa;
-    margin-bottom: 15px;
+    background: #F8FAFC;
+    margin-bottom: 14px;
 }
 
 .image-box img {
     width: 100%;
-    max-height: 170px;
+    max-height: 180px;
     object-fit: contain;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 .image-text {
     font-size: 12px;
-    color: #64748b;
-    margin-top: 12px;
+    color: #64748B;
+    margin-top: 10px;
     margin-bottom: 0;
     line-height: 1.4;
 }
@@ -97,24 +116,25 @@ body {
     display: block;
     font-weight: 600;
     font-size: 13px;
-    color: #475569;
+    color: #374151;
     margin-bottom: 6px;
 }
 
 .form-control {
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    background: #f8fafc;
-    font-size: 13px;
-    color: #1e293b;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 8px;
+    background: #ffffff;
+    font-size: 13.5px;
+    color: #1F2937;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .form-control:focus {
-    border-color: #7b1113;
+    border-color: #C0392B;
+    box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12);
 }
 
 .textarea-descripcion {
@@ -125,7 +145,7 @@ body {
 .row-grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 14px;
 }
 
 /* Pie del Modal y Botones */
@@ -133,16 +153,16 @@ body {
     display: flex;
     justify-content: flex-end;
     gap: 12px;
-    border-top: 1px solid #eaeaea;
+    border-top: 1.5px solid #F1F5F9;
     padding-top: 20px;
     margin-top: 10px;
 }
 
 .btn-cancelar {
-    background: #e2e8f0;
-    color: #334155;
+    background: #F1F5F9;
+    color: #475569;
     padding: 10px 20px;
-    border-radius: 6px;
+    border-radius: 8px;
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
@@ -150,21 +170,25 @@ body {
 }
 
 .btn-cancelar:hover {
-    background: #cbd5e1;
+    background: #E2E8F0;
+    color: #1E293B;
 }
 
 .btn-confirmar {
-    background: #7b1113; /* Color vino de la paleta */
+    background: linear-gradient(135deg, #C0392B 0%, #96281B 100%);
     color: white;
     border: none;
-    padding: 10px 25px;
-    border-radius: 6px;
+    padding: 11px 26px;
+    border-radius: 8px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s ease;
+    box-shadow: 0 3px 10px rgba(192, 57, 43, 0.3);
 }
 
 .btn-confirmar:hover {
-    background: #630d0f;
+    background: linear-gradient(135deg, #96281B 0%, #7B241C 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(192, 57, 43, 0.4);
 }

@@ -1,23 +1,31 @@
+/* ============================================================
+   LISTA_ALQUILER.CSS — Lista y formulario de alquiler
+   Creaciones y Fantasías Erlinda
+   ============================================================ */
+
+/* ---- Header ---- */
 .lista-header-titulo {
-    margin-bottom: 25px;
+    margin-bottom: 26px;
 }
 
 .lista-header-titulo h1 {
-    color: #2c3e50;
+    color: #2C3E50;
     font-size: 1.6rem;
+    font-weight: 700;
     margin-bottom: 5px;
 }
 
 .lista-header-titulo p {
-    color: #64748b;
+    color: #7F8C8D;
     font-size: 0.95rem;
     margin: 0;
 }
 
+/* ---- Grid layout ---- */
 .lista-alquiler-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 25px;
+    gap: 26px;
 }
 
 @media (max-width: 900px) {
@@ -26,24 +34,31 @@
     }
 }
 
+/* ---- Card Sección ---- */
 .card-seccion {
-    background: #ffffff;
+    background: #FFFFFF;
     border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    border: 1px solid #ECEEF0;
+    padding: 22px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    transition: box-shadow 0.25s;
+}
+
+.card-seccion:hover {
+    box-shadow: 0 8px 26px rgba(0,0,0,0.09);
 }
 
 .card-seccion h3 {
-    color: #8b1e2e;
-    font-size: 1.1rem;
+    color: #C0392B;
+    font-size: 1.05rem;
+    font-weight: 700;
     margin-top: 0;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #f1f5f9;
-    padding-bottom: 8px;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #F0F2F4;
+    padding-bottom: 10px;
 }
 
-/* Tabla del carrito */
+/* ---- Tabla carrito ---- */
 .table-responsive {
     overflow-x: auto;
 }
@@ -56,52 +71,63 @@
 }
 
 .tabla-carrito th {
-    background: #f8fafc;
-    color: #475569;
-    padding: 10px;
+    background: #C0392B;
+    color: #FFFFFF;
+    padding: 11px 12px;
     font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.3px;
 }
+
+.tabla-carrito th:first-child { border-radius: 6px 0 0 0; }
+.tabla-carrito th:last-child  { border-radius: 0 6px 0 0; }
 
 .tabla-carrito td {
-    padding: 10px;
-    border-bottom: 1px solid #f1f5f9;
+    padding: 11px 12px;
+    border-bottom: 1px solid #F1F5F9;
     vertical-align: middle;
+    color: #2C3E50;
 }
 
+.tabla-carrito tbody tr:hover { background: #FDF5F4; }
+
 .img-tabla-mini {
-    width: 45px;
-    height: 45px;
+    width: 46px;
+    height: 46px;
     object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    border: 1px solid #ECEEF0;
 }
 
 .btn-quitar-item {
-    background: #fee2e2;
-    color: #dc2626;
+    background: #fde8e6;
+    color: #C0392B;
     border: none;
     border-radius: 6px;
     width: 32px;
     height: 32px;
     cursor: pointer;
     font-size: 14px;
+    font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s;
+    transition: background 0.2s, color 0.2s;
 }
 
 .btn-quitar-item:hover {
-    background: #fecaca;
+    background: #C0392B;
+    color: white;
 }
 
 .empty-tabla {
     text-align: center;
-    color: #94a3b8;
-    padding: 20px !important;
+    color: #95A5A6;
+    padding: 22px !important;
+    font-size: 14px;
 }
 
-/* Formulario Cliente Grid */
+/* ---- Formulario Cliente ---- */
 .form-cliente-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -109,12 +135,48 @@
 }
 
 @media (max-width: 600px) {
-    .form-cliente-grid {
-        grid-template-columns: 1fr;
-    }
+    .form-cliente-grid { grid-template-columns: 1fr; }
 }
 
-/* Resumen Financiero */
+.form-cliente-grid label,
+.card-seccion label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2C3E50;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-cliente-grid input,
+.form-cliente-grid select,
+.form-cliente-grid textarea,
+.card-seccion input,
+.card-seccion select,
+.card-seccion textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #DDE0E3;
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    color: #2C3E50;
+    background: #FAFBFC;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.form-cliente-grid input:focus,
+.form-cliente-grid select:focus,
+.form-cliente-grid textarea:focus,
+.card-seccion input:focus,
+.card-seccion select:focus,
+.card-seccion textarea:focus {
+    border-color: #C0392B;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.10);
+}
+
+/* ---- Resumen Financiero ---- */
 .card-resumen {
     position: sticky;
     top: 20px;
@@ -125,53 +187,63 @@
     justify-content: space-between;
     margin-bottom: 12px;
     font-size: 0.95rem;
-    color: #475569;
+    color: #2C3E50;
 }
 
 .resumen-divider {
     border: none;
-    border-top: 1px dashed #cbd5e1;
+    border-top: 1.5px dashed #DDE0E3;
     margin: 15px 0;
 }
 
 .resumen-total {
     font-size: 1.2rem;
-    font-weight: bold;
-    color: #2c3e50;
+    font-weight: 700;
+    color: #2C3E50;
 }
 
+/* ---- Botón Confirmar ---- */
 .btn-confirmar-alquiler {
     width: 100%;
-    background-color: #27ae60;
+    background: linear-gradient(135deg, #27AE60, #219653);
     color: white;
     border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: bold;
+    padding: 13px;
+    border-radius: 10px;
+    font-weight: 700;
     font-size: 1rem;
     cursor: pointer;
-    margin-top: 15px;
-    transition: background 0.2s;
+    margin-top: 16px;
+    transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 4px 12px rgba(39,174,96,0.25);
 }
 
 .btn-confirmar-alquiler:hover {
-    background-color: #219653;
+    background: linear-gradient(135deg, #219653, #1A7A42);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(39,174,96,0.35);
 }
 
+/* ---- Alertas ---- */
 .alert-success {
-    background: #d1fae5;
-    color: #065f46;
-    padding: 12px;
+    background: #d4edda;
+    color: #155724;
+    border-left: 4px solid #27AE60;
+    padding: 12px 16px;
     border-radius: 8px;
     margin-bottom: 20px;
-    font-size: 0.9rem;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .alert-error {
-    background: #fee2e2;
-    color: #991b1b;
-    padding: 12px;
+    background: #fde8e6;
+    color: #7b1a1a;
+    border-left: 4px solid #C0392B;
+    padding: 12px 16px;
     border-radius: 8px;
     margin-bottom: 20px;
-    font-size: 0.9rem;
+    font-size: 14px;
+    font-weight: 500;
 }

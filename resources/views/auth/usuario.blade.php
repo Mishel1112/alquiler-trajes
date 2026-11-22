@@ -6,8 +6,10 @@
     <title>Dashboard - Creaciones y Fantasías Erlinda</title>
     
     <!-- CSS del Dashboard y CSS específico del módulo de usuarios -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/usuarios.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/usuarios.css') }}?v={{ time() }}">
 </head>
 <body>
 
@@ -33,37 +35,37 @@
     <!-- MENÚ LATERAL -->
     <aside class="sidebar">
         <a href="{{ route('dashboard') }}" class="menu-item">
-            <img src="{{ asset('images/ini.png') }}" alt="Inicio" style="width: 20px; height: 20px;">
+            <span class="menu-icono"><img src="{{ asset('images/ini.png') }}" alt="Inicio"></span>
             <span class="texto">Inicio</span>
         </a>
         <a href="{{ route('alquiler.seleccionar') }}" class="menu-item">
-            <img src="{{ asset('images/resg.png') }}" alt="Registrar" style="width: 20px; height: 20px;">
+            <span class="menu-icono"><img src="{{ asset('images/resg.png') }}" alt="Registrar"></span>
             <span class="texto">Registrar alquiler</span>
         </a>
         <a href="{{ route('stock') }}" class="menu-item">
-            <span class="icono">📦</span>
+            <span class="menu-icono">📦</span>
             <span class="texto">Stock</span>
         </a>
         <a href="{{ route('alquileres') }}" class="menu-item">
-            <span class="icono">📋</span>
+            <span class="menu-icono">📋</span>
             <span class="texto">Alquileres</span>
         </a>
         @if(auth()->check() && auth()->user()->esAdmin())
         <a href="{{ route('reportes') }}" class="menu-item">
-            <span class="icono">📈</span>
+            <span class="menu-icono">📈</span>
             <span class="texto">Reportes</span>
         </a>
         <a href="{{ route('usuarios.index') }}" class="menu-item activo">
-            <span class="icono">👥</span>
+            <span class="menu-icono">👥</span>
             <span class="texto">Usuarios</span>
         </a>
         @endif
 
-        <form action="{{ route('logout') }}" method="POST" style="margin-top: 20px; padding: 0 20px;">
+        <form action="{{ route('logout') }}" method="POST" class="form-logout">
             @csrf
-            <button type="submit" style="background: none; border: none; color: #333; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 15px;">
-                <span>🚪</span>
-                <span>Salir</span>
+            <button type="submit" class="btn-salir">
+                <span class="menu-icono">🚪</span>
+                <span class="texto">Salir</span>
             </button>
         </form>
     </aside>
@@ -103,10 +105,10 @@
             <h1 class="titulo-pagina">Gestión de Usuarios</h1>
 
             <!-- CONTENEDOR PRINCIPAL: SOLO LISTA DE USUARIOS -->
-            <div class="card-gestion" style="width: 100%; box-sizing: border-box;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #f1f3f5; flex-wrap: wrap; gap: 10px;">
-                    <h2 class="card-titulo" style="margin-bottom: 0; padding-bottom: 0; border-bottom: none; font-size: 22px;">Lista de Usuarios</h2>
-                    <button type="button" onclick="abrirModalCrear()" style="background: #2563eb; color: #ffffff; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25); transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+            <div class="card-gestion">
+                <div class="card-header-usuarios">
+                    <h2 class="card-titulo">Lista de Usuarios</h2>
+                    <button type="button" class="btn-nuevo-usuario" onclick="abrirModalCrear()">
                         <span>+ Agregar usuario</span>
                     </button>
                 </div>
@@ -185,7 +187,7 @@
     </main>
 
     <!-- MODAL PARA CREAR NUEVO USUARIO -->
-    <div id="modalNuevoUsuario" class="modal-overlay {{ (isset($errors) && $errors->any()) ? 'activo' : '' }}">
+    <div id="modalNuevoUsuario" class="modal-overlay {{ (isset($errors) && $errors->any()) ? 'activo' : '' }}" style="display: {{ (isset($errors) && $errors->any()) ? 'flex' : 'none' }};">
         <div class="modal-contenedor">
             <div class="modal-header">
                 <h3>Nuevo Usuario</h3>
@@ -196,6 +198,16 @@
                 @csrf
                 
                 <div class="modal-body">
+                    @if (isset($errors) && $errors->any())
+                        <div class="alert alert-danger" style="margin-bottom: 14px; padding: 10px 14px; font-size: 13px;">
+                            <strong>Por favor corrige los siguientes errores:</strong>
+                            <ul style="margin: 4px 0 0 16px; padding: 0;">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="form-row-dos">
                         <div class="form-group">
                             <label for="nuevo_nombre">Nombre</label>
@@ -254,7 +266,7 @@
     </div>
 
     <!-- MODAL PARA EDITAR USUARIO -->
-    <div id="modalEditarUsuario" class="modal-overlay">
+    <div id="modalEditarUsuario" class="modal-overlay" style="display: none;">
         <div class="modal-contenedor">
             <div class="modal-header">
                 <h3>Editar Usuario</h3>
@@ -322,11 +334,19 @@
     <script>
         // Abrir y Cerrar Modal de Crear Usuario
         function abrirModalCrear() {
-            document.getElementById('modalNuevoUsuario').classList.add('activo');
+            const modal = document.getElementById('modalNuevoUsuario');
+            if (modal) {
+                modal.classList.add('activo');
+                modal.style.display = 'flex';
+            }
         }
 
         function cerrarModalCrear() {
-            document.getElementById('modalNuevoUsuario').classList.remove('activo');
+            const modal = document.getElementById('modalNuevoUsuario');
+            if (modal) {
+                modal.classList.remove('activo');
+                modal.style.display = 'none';
+            }
         }
 
         document.getElementById('modalNuevoUsuario').addEventListener('click', function(e) {
@@ -361,12 +381,20 @@
             document.getElementById('edit_idRol').value = idRol;
             document.getElementById('edit_password').value = '';
 
-            document.getElementById('modalEditarUsuario').classList.add('activo');
+            const modal = document.getElementById('modalEditarUsuario');
+            if (modal) {
+                modal.classList.add('activo');
+                modal.style.display = 'flex';
+            }
         }
 
         // Cerrar Modal de Edición
         function cerrarModalEditar() {
-            document.getElementById('modalEditarUsuario').classList.remove('activo');
+            const modal = document.getElementById('modalEditarUsuario');
+            if (modal) {
+                modal.classList.remove('activo');
+                modal.style.display = 'none';
+            }
         }
 
         // Cerrar modal al hacer clic en el fondo exterior

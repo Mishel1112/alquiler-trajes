@@ -5,44 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alquileres, Devoluciones y Reservas - Creaciones y Fantasías Erlinda</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/alquiler.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/alquiler.css') }}?v={{ time() }}">
 </head>
 <body>
 
     <aside class="sidebar">
         <a href="{{ route('dashboard') }}" class="menu-item">
-            <img src="{{ asset('images/ini.png') }}" alt="Inicio" style="width: 20px; height: 20px;">
+            <span class="menu-icono"><img src="{{ asset('images/ini.png') }}" alt="Inicio"></span>
             <span class="texto">Inicio</span>
         </a>
         <a href="{{ route('alquiler.seleccionar') }}" class="menu-item">
-            <img src="{{ asset('images/resg.png') }}" alt="Registrar" style="width: 20px; height: 20px;">
+            <span class="menu-icono"><img src="{{ asset('images/resg.png') }}" alt="Registrar"></span>
             <span class="texto">Registrar alquiler</span>
         </a>
         <a href="{{ route('stock') }}" class="menu-item">
-            <span class="icono">📦</span>
+            <span class="menu-icono">📦</span>
             <span class="texto">Stock</span>
         </a>
         <a href="{{ route('alquileres') }}" class="menu-item activo">
-            <span class="icono">📋</span>
+            <span class="menu-icono">📋</span>
             <span class="texto">Alquileres</span>
         </a>
         @if(auth()->check() && auth()->user()->esAdmin())
         <a href="{{ route('reportes') }}" class="menu-item">
-            <span class="icono">📈</span>
+            <span class="menu-icono">📈</span>
             <span class="texto">Reportes</span>
         </a>
         <a href="{{ route('usuarios.index') }}" class="menu-item">
-            <span class="icono">👥</span>
+            <span class="menu-icono">👥</span>
             <span class="texto">Usuarios</span>
         </a>
         @endif
 
-        <form action="{{ route('logout') }}" method="POST" style="margin-top: 20px; padding: 0 20px;">
+        <form action="{{ route('logout') }}" method="POST" class="form-logout">
             @csrf
-            <button type="submit" style="background: none; border: none; color: #333; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 15px;">
-                <span>🚪</span>
-                <span>Salir</span>
+            <button type="submit" class="btn-salir">
+                <span class="menu-icono">🚪</span>
+                <span class="texto">Salir</span>
             </button>
         </form>
     </aside>
@@ -246,7 +248,7 @@
                                                 data-estado="{{ $estadoNombre }}"
                                                 onclick="mostrarModalDetalle(this)"
                                                 title="Ver detalle de la devolución">
-                                            Ver      detalle
+                                            Ver detalle
                                         </button>
                                     @endif
                                 </td>
@@ -347,21 +349,21 @@
                                 <td>
                                     <div style="display: flex; gap: 5px; align-items: center;">
                                         {{-- 1. Ver Detalle / Reimprimir Recibo --}}
-                                        <a href="{{ route('reservas.recibo', $idRecibo) }}" target="_blank" style="background-color: #17a2b8; color: white; padding: 5px 9px; border-radius: 4px; text-decoration: none; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 3px;" title="Ver comprobante de reserva">
-                                             Ver
+                                        <a href="{{ route('reservas.recibo', $idRecibo) }}" target="_blank" class="btn-ver-detalle" title="Ver comprobante de reserva">
+                                            Ver
                                         </a>
 
                                         @if(strtolower($estadoRes) == 'reservado')
                                             {{-- 2. Registrar Entrega --}}
-                                            <a href="{{ route('reservas.entregar.form', $idRecibo) }}" style="background-color: #28a745; color: white; padding: 5px 9px; border-radius: 4px; text-decoration: none; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 3px;" title="Registrar entrega de trajes">
-                                                 Entregar
+                                            <a href="{{ route('reservas.entregar.form', $idRecibo) }}" class="btn-devolver" title="Registrar entrega de trajes">
+                                                Entregar
                                             </a>
 
                                             {{-- 3. Cancelar Reserva --}}
                                             <form action="{{ route('reservas.cancelar', $idRecibo) }}" method="POST" style="display: inline; margin: 0;" onsubmit="return confirm('¿Está seguro de que desea cancelar esta reserva? Se devolverá el stock disponible.');">
                                                 @csrf
-                                                <button type="submit" style="background-color: #dc3545; color: white; border: none; padding: 5px 9px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 3px;" title="Cancelar reserva">
-                                            Cancelar
+                                                <button type="submit" class="btn-accion-reserva" style="background: #E74C3C; color: white;" title="Cancelar reserva">
+                                                    Cancelar
                                                 </button>
                                             </form>
                                         @endif
@@ -435,6 +437,17 @@
                             @endforelse
                         </tbody>
                     </table>
+
+                    @if(method_exists($historial, 'hasPages') && $historial->hasPages())
+                        <div class="paginacion-container">
+                            <div class="paginacion-info">
+                                Mostrando <strong>{{ $historial->firstItem() }}</strong> - <strong>{{ $historial->lastItem() }}</strong> de <strong>{{ $historial->total() }}</strong> alquileres finalizados
+                            </div>
+                            <div class="paginacion-links">
+                                {{ $historial->links('pagination::bootstrap-5') }}
+                            </div>
+                        </div>
+                    @endif
                 </div>
             @endif
 

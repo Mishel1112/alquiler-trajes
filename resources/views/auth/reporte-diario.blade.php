@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte Diario - Creaciones y Fantasías Erlinda</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/reporte-diario.css') }}">
     <script src="{{ asset('js/chart.umd.js') }}"></script>
     <script>
@@ -38,37 +40,37 @@
     <!-- MENÚ LATERAL -->
     <aside class="sidebar">
         <a href="{{ route('dashboard') }}" class="menu-item">
-            <img src="{{ asset('images/ini.png') }}" alt="Inicio" style="width: 20px; height: 20px;">
+            <span class="menu-icono"><img src="{{ asset('images/ini.png') }}" alt="Inicio"></span>
             <span class="texto">Inicio</span>
         </a>
         <a href="{{ route('alquiler.seleccionar') }}" class="menu-item">
-            <img src="{{ asset('images/resg.png') }}" alt="Registrar" style="width: 20px; height: 20px;">
+            <span class="menu-icono"><img src="{{ asset('images/resg.png') }}" alt="Registrar"></span>
             <span class="texto">Registrar alquiler</span>
         </a>
         <a href="{{ route('stock') }}" class="menu-item">
-            <span class="icono">📦</span>
+            <span class="menu-icono">📦</span>
             <span class="texto">Stock</span>
         </a>
         <a href="{{ route('alquileres') }}" class="menu-item">
-            <span class="icono">📋</span>
+            <span class="menu-icono">📋</span>
             <span class="texto">Alquileres</span>
         </a>
         
         @if(auth()->check() && auth()->user()->esAdmin())
         <a href="{{ route('reportes') }}" class="menu-item activo">
-            <span class="icono">📈</span>
+            <span class="menu-icono">📈</span>
             <span class="texto">Reportes</span>
         </a>
         <a href="{{ route('usuarios.index') }}" class="menu-item">
-            <span class="icono">👥</span>
+            <span class="menu-icono">👥</span>
             <span class="texto">Usuarios</span>
         </a>
         @endif
 
-        <form action="{{ route('logout') }}" method="POST" style="margin-top: 20px; padding: 0 20px;">
+        <form action="{{ route('logout') }}" method="POST" class="form-logout">
             @csrf
-            <button type="submit" style="background: none; border: none; color: #333; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 15px;">
-                <span>🚪</span>
+            <button type="submit" class="btn-salir">
+                <span class="menu-icono">🚪</span>
                 <span>Salir</span>
             </button>
         </form>
