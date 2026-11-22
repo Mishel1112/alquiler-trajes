@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alquiler de Trajes - Creaciones y Fantasías Erlinda</title>
-    <link rel="stylesheet" href="{{ asset('css/stock.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/stock.css') }}?v={{ time() }}">
 </head>
 <body>
 
